@@ -229,17 +229,17 @@ class Rozetkapay extends PaymentModule
             }
         }
 
-        $billingFacade = $this->getService('rozetkapay.ps_billings_facade');
-        $partnerLogo = $this->getLocalPath() . 'logo.png';
+//        $billingFacade = $this->getService('rozetkapay.ps_billings_facade');
+//        $partnerLogo = $this->getLocalPath() . 'logo.png';
 
-        Media::addJsDef($billingFacade->present([
-            'logo' => $partnerLogo,
-            'tosLink' => 'https://www.prestashop.com/en/prestashop-account-terms-conditions',
-            'privacyLink' => 'https://www.prestashop.com/en/privacy-policy',
-            'emailSupport' => 'ecomsupport@rozetkapay.com',
-        ]));
+//        Media::addJsDef($billingFacade->present([
+//            'logo' => $partnerLogo,
+//            'tosLink' => 'https://www.prestashop.com/en/prestashop-account-terms-conditions',
+//            'privacyLink' => 'https://www.prestashop.com/en/privacy-policy',
+//            'emailSupport' => 'ecomsupport@rozetkapay.com',
+//        ]));
 
-        $this->context->smarty->assign('urlBilling', "https://unpkg.com/@prestashopcorp/billing-cdc/dist/bundle.js");
+//        $this->context->smarty->assign('urlBilling', "https://unpkg.com/@prestashopcorp/billing-cdc/dist/bundle.js");
         $listLanguages = Language::getLanguages();
 
         foreach ($this->settingList as $key => $default) {
@@ -265,7 +265,7 @@ class Rozetkapay extends PaymentModule
         $this->context->smarty->assign('languages', $listLanguages);
         $this->context->smarty->assign('error_login', false);
         $this->context->smarty->assign('error_password', false);
-        $this->context->smarty->assign('urlBilling', "https://unpkg.com/@prestashopcorp/billing-cdc/dist/bundle.js");
+//        $this->context->smarty->assign('urlBilling', "https://unpkg.com/@prestashopcorp/billing-cdc/dist/bundle.js");
         $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
 
         return $output;
