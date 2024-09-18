@@ -27,10 +27,9 @@ if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-
 class RozetkaPayRozetkaPayModuleFrontController extends ModuleFrontController
 {
-    public $version = '3.0.1';
+    public $version = '3.0.2';
 
     public $ssl = true;
 
@@ -131,7 +130,7 @@ class RozetkaPayRozetkaPayModuleFrontController extends ModuleFrontController
 
         if (Configuration::get('ROZETKAPAY_LIVE_MODE') === "1") {
             $this->rpay->setBasicAuthTest();
-            $orderInfo->id = $orderInfo->id . "_" . md5($_SERVER['HTTP_HOST']);
+            $orderInfo->id = $orderInfo->id . "_" . sha1($_SERVER['HTTP_HOST']);
         } else {
             $this->rpay->setBasicAuth(Configuration::get('ROZETKAPAY_LOGIN'), Configuration::get('ROZETKAPAY_PASSWORD'));
         }
@@ -262,16 +261,13 @@ class RozetkaPayRozetkaPayModuleFrontController extends ModuleFrontController
         $this->setTemplate('module:rozetkapay/views/templates/front/payment_execution.tpl');
     }
 
-
     public function callback()
     {
 
         $this->log('fun: callback');
         $this->log(Tools::file_get_contents('php://input'));
-
-        $test = '';
-
-        $result = $this->rpay->сallbacks($test);
+        
+        $result = $this->rpay->сallbacks();
 
         if (!isset($result->external_id)) {
             $this->log('Failure error return data:');
@@ -335,7 +331,6 @@ class RozetkaPayRozetkaPayModuleFrontController extends ModuleFrontController
         }
     }
 
-
     public function log($var)
     {
         if ($this->extlog !== false) {
@@ -348,19 +343,14 @@ class RozetkaPayRozetkaPayModuleFrontController extends ModuleFrontController
         switch ($status) {
             case "init":
                 return Configuration::get('ROZETKAPAY_ORDER_STATUS_INIT');
-                break;
             case "pending":
                 return Configuration::get('ROZETKAPAY_ORDER_STATUS_PENDING');
-                break;
             case "success":
                 return Configuration::get('ROZETKAPAY_ORDER_STATUS_SUCCESS');
-                break;
             case "failure":
                 return Configuration::get('ROZETKAPAY_ORDER_STATUS_FAILURE');
-                break;
             default:
                 return "0";
-                break;
         }
     }
 
