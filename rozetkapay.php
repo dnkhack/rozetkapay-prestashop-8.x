@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 PrestaShop
+ * 2020-2024 RozetkaPay
  *
  * NOTICE OF LICENSE
  *
@@ -18,8 +18,8 @@
  * versions in the future. If you wish to customize PrestaShop for your
  * needs please refer to http://www.prestashop.com for more information.
  *
- * @author PrestaShop SA <contact@prestashop.com>
- * @copyright 2007-2015 PrestaShop SA
+ * @author RozetkaPay <ecomsupport@rozetkapay.com>
+ * @copyright 2020-2024 RozetkaPay
  * @license http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  *           International Registered Trademark & Property of PrestaShop SA
  */
@@ -30,8 +30,8 @@ if (!defined('_PS_VERSION_')) {
 $autoloadPath = __DIR__ . '/vendor/autoload.php';
 if (file_exists($autoloadPath)) {
     require_once $autoloadPath;
-    require_once __DIR__ . '/classes/php_sdk_simple.php';
-    require_once __DIR__ . '/classes/phpqrcode.php';
+    require_once __DIR__ . '/vendor/php_sdk_simple.php';
+    require_once __DIR__ . '/vendor/phpqrcode.php';
 }
 
 use Prestashop\ModuleLibMboInstaller\DependencyBuilder;
@@ -72,11 +72,12 @@ class Rozetkapay extends PaymentModule
     {
         $this->name = 'rozetkapay';
         $this->tab = 'payments_gateways';
-        $this->version = '3.0.1';
+        $this->version = '3.2.2';
         $this->author = 'RozetkaPay';
         $this->need_instance = 0;
         $this->currencies = true;
         $this->currencies_mode = 'checkbox';
+        $this->module_key = '4541bffda7dd452045e031aa0f544e3d';
 
         $this->bootstrap = true;
 
@@ -228,18 +229,7 @@ class Rozetkapay extends PaymentModule
                 ]);
             }
         }
-
-//        $billingFacade = $this->getService('rozetkapay.ps_billings_facade');
-//        $partnerLogo = $this->getLocalPath() . 'logo.png';
-
-//        Media::addJsDef($billingFacade->present([
-//            'logo' => $partnerLogo,
-//            'tosLink' => 'https://www.prestashop.com/en/prestashop-account-terms-conditions',
-//            'privacyLink' => 'https://www.prestashop.com/en/privacy-policy',
-//            'emailSupport' => 'ecomsupport@rozetkapay.com',
-//        ]));
-
-//        $this->context->smarty->assign('urlBilling', "https://unpkg.com/@prestashopcorp/billing-cdc/dist/bundle.js");
+        
         $listLanguages = Language::getLanguages();
 
         foreach ($this->settingList as $key => $default) {
@@ -265,7 +255,6 @@ class Rozetkapay extends PaymentModule
         $this->context->smarty->assign('languages', $listLanguages);
         $this->context->smarty->assign('error_login', false);
         $this->context->smarty->assign('error_password', false);
-//        $this->context->smarty->assign('urlBilling', "https://unpkg.com/@prestashopcorp/billing-cdc/dist/bundle.js");
         $output = $this->context->smarty->fetch($this->local_path.'views/templates/admin/configure.tpl');
 
         return $output;
@@ -383,38 +372,6 @@ class Rozetkapay extends PaymentModule
         }
 
         return [$newOption];
-    }
-
-
-    public function hookPayment($params)
-    {
-        if (!$this->active) {
-            return;
-        }
-
-        if (!$this->_checkCurrency($params['cart'])) {
-            return;
-        }
-
-        if (!$this->validModule) {
-            return;
-        }
-
-        $this->context->smarty->force_compile = true;
-
-        $urlPayCreat = Context::getContext()->link->getModuleLink('rozetkapay', 'rozetkapay');
-
-        $this->context->smarty->assign('urlPayCreat', $urlPayCreat);
-        $this->context->smarty->assign('urlCancel', $urlPayCreat);
-
-        $this->context->smarty->assign('showIcon', Configuration::get('ROZETKAPAY_VIEW_ICON_STATUS') == "1");
-
-        $title = $this->getTitle();
-
-        $this->context->smarty->assign('text_title', $title);
-        $this->context->smarty->assign($this->languages);
-
-        return $this->display('rozetkapay', 'rozetkapay.tpl');
     }
 
     public function getTitle()
