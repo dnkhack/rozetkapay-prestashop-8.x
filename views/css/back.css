@@ -1,4 +1,4 @@
-{*
+/**
  * NOTICE OF LICENSE
  *
  * This file is not open source! Each license that you purchased is only available for 1 website only.
@@ -14,13 +14,13 @@
  * @author    RozetkaPay <ecomsupport@rozetkapay.com>
  * @copyright 2020-2024 RozetkaPay
  * @license   Valid for 1 website (or project) for each purchase of license
-*}
-
-<div>
-	<h3>{l s='An error occurred' mod='rozetkapay'}:</h3>
-	<ul class="alert alert-danger">
-		{foreach from=$errors item='error'}
-			<li>{$error|escape:'htmlall':'UTF-8'}.</li>
-		{/foreach}
-	</ul>
-</div>
+ */
+.test-card {
+    margin: 10px 0;
+}
+.test-card td, .test-card th {
+    padding: 10px;
+}
+#card-payment-logo {
+    width: auto;
+}

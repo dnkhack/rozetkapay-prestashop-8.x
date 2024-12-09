@@ -1,4 +1,4 @@
-{*
+/**
  * NOTICE OF LICENSE
  *
  * This file is not open source! Each license that you purchased is only available for 1 website only.
@@ -14,13 +14,18 @@
  * @author    RozetkaPay <ecomsupport@rozetkapay.com>
  * @copyright 2020-2024 RozetkaPay
  * @license   Valid for 1 website (or project) for each purchase of license
-*}
-
-<div>
-	<h3>{l s='An error occurred' mod='rozetkapay'}:</h3>
-	<ul class="alert alert-danger">
-		{foreach from=$errors item='error'}
-			<li>{$error|escape:'htmlall':'UTF-8'}.</li>
-		{/foreach}
-	</ul>
-</div>
+ */
+window.addEventListener("load", function (event) {
+    if ($('#ROZETKAPAY_API_TEST_MODE_on').is(':checked')) {
+        $('.form-group.rozetka-credentials').hide();
+    } else {
+        $('.form-group.rozetka-credentials').show();
+    }
+    $('input[name=ROZETKAPAY_API_TEST_MODE]').on('change',function(){
+        if ($('#ROZETKAPAY_API_TEST_MODE_on').is(':checked')) {
+            $('.form-group.rozetka-credentials').hide();
+        } else {
+            $('.form-group.rozetka-credentials').show();
+        }
+    });
+});
