@@ -1,4 +1,5 @@
-{*
+<?php
+/**
  * NOTICE OF LICENSE
  *
  * This file is not open source! Each license that you purchased is only available for 1 website only.
@@ -14,13 +15,59 @@
  * @author    RozetkaPay <ecomsupport@rozetkapay.com>
  * @copyright 2020-2024 RozetkaPay
  * @license   Valid for 1 website (or project) for each purchase of license
-*}
+ */
+if (!defined('_PS_VERSION_')) {
+    exit;
+}
+class RozetkapayApiSdkProductClass
+{
+    /**
+     * @var string
+     */
+    public $id;
 
-<div>
-	<h3>{l s='An error occurred' mod='rozetkapay'}:</h3>
-	<ul class="alert alert-danger">
-		{foreach from=$errors item='error'}
-			<li>{$error|escape:'htmlall':'UTF-8'}.</li>
-		{/foreach}
-	</ul>
-</div>
+    /**
+     * @var string
+     */
+    public $currency;
+
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $description;
+
+    /**
+     * @var string
+     */
+    public $category;
+
+    /**
+     * @var string
+     */
+    public $image;
+
+    /**
+     * @var string
+     */
+    public $quantity;
+
+    /**
+     * @var string
+     */
+    public $net_amount;
+
+    /**
+     * @var string
+     */
+    public $vat_amount;
+
+    /**
+     * @var string
+     */
+    public $url;
+}
