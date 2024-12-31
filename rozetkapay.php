@@ -46,6 +46,7 @@ class Rozetkapay extends PaymentModule
         $this->tab = 'payments_gateways';
         $this->version = '1.0.0';
         $this->author = 'RozetkaPay';
+        $this->module_key = '4541bffda7dd452045e031aa0f544e3d';
         $this->need_instance = 0;
         $this->bootstrap = true;
         parent::__construct();
